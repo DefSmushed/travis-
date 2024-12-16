@@ -59,15 +59,23 @@
     <p>Click the button to earn coins and buy upgrades!</p>
     <button id="clickButton">Click Me!</button>
     <div class="score" id="score">Coins: 0</div>
-    <button class="upgrade" id="upgradeButton">Upgrade (Cost: 10 Coins)</button>
+    <button class="upgrade" id="upgradeButton1">Upgrade x1 (Cost: 10 Coins)</button>
+    <button class="upgrade" id="upgradeButton10">Upgrade x10 (Cost: 100 Coins)</button>
+    <button class="upgrade" id="upgradeButton100">Upgrade x100 (Cost: 1000 Coins)</button>
+    <button class="upgrade" id="autoClickerButton">Buy AutoClicker (Cost: 50 Coins)</button>
     <button class="reset" id="resetButton">Reset</button>
 
     <script>
         let coins = 0;
         let coinsPerClick = 1;
+        let autoClickerCost = 50;
+        let autoClickers = 0;
         const scoreDisplay = document.getElementById('score');
         const clickButton = document.getElementById('clickButton');
-        const upgradeButton = document.getElementById('upgradeButton');
+        const upgradeButton1 = document.getElementById('upgradeButton1');
+        const upgradeButton10 = document.getElementById('upgradeButton10');
+        const upgradeButton100 = document.getElementById('upgradeButton100');
+        const autoClickerButton = document.getElementById('autoClickerButton');
         const resetButton = document.getElementById('resetButton');
 
         clickButton.addEventListener('click', () => {
@@ -75,20 +83,59 @@
             scoreDisplay.textContent = `Coins: ${coins}`;
         });
 
-        upgradeButton.addEventListener('click', () => {
+        upgradeButton1.addEventListener('click', () => {
             if (coins >= 10) {
                 coins -= 10;
                 coinsPerClick++;
                 scoreDisplay.textContent = `Coins: ${coins}`;
-                upgradeButton.textContent = `Upgrade (Cost: 10 Coins)`;
             } else {
                 alert("Not enough coins for an upgrade!");
             }
         });
 
+        upgradeButton10.addEventListener('click', () => {
+            if (coins >= 100) {
+                coins -= 100;
+                coinsPerClick += 10;
+                scoreDisplay.textContent = `Coins: ${coins}`;
+            } else {
+                alert("Not enough coins for an upgrade!");
+            }
+        });
+
+        upgradeButton100.addEventListener('click', () => {
+            if (coins >= 1000) {
+                coins -= 1000;
+                coinsPerClick += 100;
+                scoreDisplay.textContent = `Coins: ${coins}`;
+            } else {
+                alert("Not enough coins for an upgrade!");
+            }
+        });
+
+        autoClickerButton.addEventListener('click', () => {
+            if (coins >= autoClickerCost) {
+                coins -= autoClickerCost;
+                autoClickers++;
+                autoClickerCost += 25; // Increase cost for each AutoClicker
+                autoClickerButton.textContent = `Buy AutoClicker (Cost: ${autoClickerCost} Coins)`;
+                scoreDisplay.textContent = `Coins: ${coins}`;
+            } else {
+                alert("Not enough coins to buy an AutoClicker!");
+            }
+        });
+
+        setInterval(() => {
+            coins += autoClickers;
+            scoreDisplay.textContent = `Coins: ${coins}`;
+        }, 1000); // AutoClickers add coins every second
+
         resetButton.addEventListener('click', () => {
             coins = 0;
             coinsPerClick = 1;
+            autoClickers = 0;
+            autoClickerCost = 50;
+            autoClickerButton.textContent = `Buy AutoClicker (Cost: ${autoClickerCost} Coins)`;
             scoreDisplay.textContent = `Coins: ${coins}`;
         });
     </script>
