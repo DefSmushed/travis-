@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click Game with Upgrades</title>
+    <title>Abyss Clicker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
         }
         button {
             padding: 15px 30px;
@@ -55,7 +57,7 @@
     </style>
 </head>
 <body>
-    <h1>Click Game with Upgrades</h1>
+    <h1>Abyss Clicker</h1>
     <p>Click the button to earn coins and buy upgrades!</p>
     <button id="clickButton">Click Me!</button>
     <div class="score" id="score">Coins: 0</div>
@@ -63,6 +65,8 @@
     <button class="upgrade" id="upgradeButton10">Upgrade x10 (Cost: 100 Coins)</button>
     <button class="upgrade" id="upgradeButton100">Upgrade x100 (Cost: 1000 Coins)</button>
     <button class="upgrade" id="autoClickerButton">Buy AutoClicker (Cost: 50 Coins)</button>
+    <button class="upgrade" id="autoClickerButton2">Buy AutoClicker x2 (Cost: 100 Coins)</button>
+    <button class="upgrade" id="autoClickerButton5">Buy AutoClicker x5 (Cost: 250 Coins)</button>
     <button class="reset" id="resetButton">Reset</button>
 
     <script>
@@ -76,6 +80,8 @@
         const upgradeButton10 = document.getElementById('upgradeButton10');
         const upgradeButton100 = document.getElementById('upgradeButton100');
         const autoClickerButton = document.getElementById('autoClickerButton');
+        const autoClickerButton2 = document.getElementById('autoClickerButton2');
+        const autoClickerButton5 = document.getElementById('autoClickerButton5');
         const resetButton = document.getElementById('resetButton');
 
         clickButton.addEventListener('click', () => {
@@ -122,6 +128,26 @@
                 scoreDisplay.textContent = `Coins: ${coins}`;
             } else {
                 alert("Not enough coins to buy an AutoClicker!");
+            }
+        });
+
+        autoClickerButton2.addEventListener('click', () => {
+            if (coins >= 100) {
+                coins -= 100;
+                autoClickers += 2;
+                scoreDisplay.textContent = `Coins: ${coins}`;
+            } else {
+                alert("Not enough coins for this AutoClicker upgrade!");
+            }
+        });
+
+        autoClickerButton5.addEventListener('click', () => {
+            if (coins >= 250) {
+                coins -= 250;
+                autoClickers += 5;
+                scoreDisplay.textContent = `Coins: ${coins}`;
+            } else {
+                alert("Not enough coins for this AutoClicker upgrade!");
             }
         });
 
