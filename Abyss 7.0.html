@@ -248,34 +248,35 @@
     });
 
     upgradeButton1.addEventListener('click', () => {
-        if (coins >= 10) {
-            coins -= 10;
-            coinsPerClick++;
-            scoreDisplay.textContent = `Coins: ${coins}`;
-        } else {
-            alert('Not enough coins for an upgrade!');
-        }
-    });
+    if (coins >= 100) { // Changed cost to 100 coins
+        coins -= 100;
+        coinsPerClick++;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    } else {
+        alert('Not enough coins for an upgrade!');
+    }
+});
 
-    upgradeButton10.addEventListener('click', () => {
-        if (coins >= 100) {
-            coins -= 100;
-            coinsPerClick += 10;
-            scoreDisplay.textContent = `Coins: ${coins}`;
-        } else {
-            alert('Not enough coins for an upgrade!');
-        }
-    });
+upgradeButton10.addEventListener('click', () => {
+    if (coins >= 10000) { // Changed cost to 10,000 coins
+        coins -= 10000;
+        coinsPerClick += 10;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    } else {
+        alert('Not enough coins for an upgrade!');
+    }
+});
 
-    upgradeButton100.addEventListener('click', () => {
-        if (coins >= 1000) {
-            coins -= 1000;
-            coinsPerClick += 100;
-            scoreDisplay.textContent = `Coins: ${coins}`;
-        } else {
-            alert('Not enough coins for an upgrade!');
-        }
-    });
+upgradeButton100.addEventListener('click', () => {
+    if (coins >= 100000) { // Changed cost to 100,000 coins
+        coins -= 100000;
+        coinsPerClick += 100;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    } else {
+        alert('Not enough coins for an upgrade!');
+    }
+});
+
 
     autoClickerButton.addEventListener('click', () => {
         if (coins >= autoClickerCost) {
