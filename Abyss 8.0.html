@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyss Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+            overflow: hidden;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .left-section {
+            text-align: center;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .left-section img {
+            width: 150px;
+            height: auto;
+            position: absolute;
+            top: 20px;
+        }
+
+        .right-section {
+            height: 400px;
+            width: 250px;
+            overflow-y: scroll;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid white;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .small-button {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .cheat-menu-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .cheat-menu-button:hover {
+            background-color: #e53935;
+        }
+
+        .cheat-menu {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+
+        .score {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .moon-launch {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .moon-launch:hover {
+            background-color: #e68900;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <button class="cheat-menu-button" id="cheatMenuButton">CHEAT</button>
+    <div class="game-container">
+        <div class="left-section">
+            <h1>Abyss Clicker</h1>
+            <p>Click the button to earn coins and buy upgrades!</p>
+            <button id="clickButton">Click Me!</button>
+            <div class="score" id="score">Coins: 0</div>
+            <div id="spaceUpgrades">
+                <button class="moon-launch small-button" id="becomeAstronautButton">Become Astronaut (Cost: 5000 Coins)</button>
+                <button class="moon-launch small-button" id="buildRocketButton" disabled>Build Rocket (Cost: 10000 Coins)</button>
+                <button class="moon-launch small-button" id="goToMoonButton" disabled>Go to the Moon (Cost: 1000000 Coins)</button>
+            </div>
+            <img id="astronautImage" src="astronaut.png" alt="Astronaut" style="display: none;">
+            <img id="rocketImage" src="rocket.png" alt="Rocket" style="display: none;">
+            <img id="moonImage" src="moon.png" alt="Moon" style="display: none;">
+        </div>
+        <div class="right-section">
+            <button class="upgrade" id="upgradeButton1">Upgrade x1 (Cost: 10 Coins)</button>
+            <button class="upgrade" id="upgradeButton10">Upgrade x10 (Cost: 100 Coins)</button>
+            <button class="upgrade" id="upgradeButton100">Upgrade x100 (Cost: 1000 Coins)</button>
+            <button class="upgrade" id="autoClickerButton">Buy AutoClicker (Cost: 50 Coins)</button>
+            <button class="upgrade" id="autoClickerButton2">Upgrade AutoClicker x2 (Cost: 200 Coins)</button>
+            <button class="upgrade" id="autoClickerButton5">Upgrade AutoClicker x5 (Cost: 500 Coins)</button>
+            <button class="upgrade" id="autoClickerButton10">Upgrade AutoClicker x10 (Cost: 1000 Coins)</button>
+            <button class="reset" id="resetButton">Reset</button>
+        </div>
+    </div>
+
+    <div class="cheat-menu" id="cheatMenu">
+        <h2>Cheat Menu</h2>
+        <button id="addCoinsButton">Add 10,000 Coins</button>
+        <button id="increaseClickPowerButton">Increase Click Power x10</button>
+        <button id="unlockMoonButton">Unlock Moon</button>
+    </div>
+
+<script>
+    let coins = 0;
+    let coinsPerClick = 1;
+
+    const scoreDisplay = document.getElementById('score');
+    const clickButton = document.getElementById('clickButton');
+    const cheatMenuButton = document.getElementById('cheatMenuButton');
+    const cheatMenu = document.getElementById('cheatMenu');
+
+    // Cheat Menu Functionality
+    cheatMenuButton.addEventListener('click', () => {
+        const password = prompt('Enter the password to unlock the cheat menu:');
+        if (password === 'smushed_150305') {
+            cheatMenu.style.display = cheatMenu.style.display === 'none' ? 'block' : 'none';
+            alert('Cheat menu toggled!');
+        } else {
+            alert('Incorrect password!');
+        }
+    });
+
+    document.getElementById('addCoinsButton').addEventListener('click', () => {
+        coins += 10000;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    });
+
+    document.getElementById('increaseClickPowerButton').addEventListener('click', () => {
+        coinsPerClick *= 10;
+        alert(`Click power increased! Current Click Power: ${coinsPerClick}`);
+    });
+
+    document.getElementById('unlockMoonButton').addEventListener('click', () => {
+        document.body.style.background = 'black';
+        alert("You've unlocked the moon!");
+    });
+
+    clickButton.addEventListener('click', () => {
+        coins += coinsPerClick;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    });
+</script>
+</body>
+</html>
