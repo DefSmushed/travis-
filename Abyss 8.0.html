@@ -173,12 +173,65 @@
     let coins = 0;
     let coinsPerClick = 1;
 
+    // Initial Costs
+    let upgradeCost1x = 100;
+    let upgradeCost10x = 10000;
+    let upgradeCost100x = 100000;
+
     const scoreDisplay = document.getElementById('score');
     const clickButton = document.getElementById('clickButton');
+    const upgradeButton1 = document.getElementById('upgradeButton1');
+    const upgradeButton10 = document.getElementById('upgradeButton10');
+    const upgradeButton100 = document.getElementById('upgradeButton100');
+
+    clickButton.addEventListener('click', () => {
+        coins += coinsPerClick;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    });
+
+    // Upgrade x1
+    upgradeButton1.addEventListener('click', () => {
+        if (coins >= upgradeCost1x) {
+            coins -= upgradeCost1x;
+            coinsPerClick += 1;
+            upgradeCost1x = Math.floor(upgradeCost1x * 1.5); // Increase cost by 50%
+            upgradeButton1.textContent = `Upgrade x1 (Cost: ${upgradeCost1x} Coins)`;
+            scoreDisplay.textContent = `Coins: ${coins}`;
+        } else {
+            alert('Not enough coins for Upgrade x1!');
+        }
+    });
+
+    // Upgrade x10
+    upgradeButton10.addEventListener('click', () => {
+        if (coins >= upgradeCost10x) {
+            coins -= upgradeCost10x;
+            coinsPerClick += 10;
+            upgradeCost10x = Math.floor(upgradeCost10x * 1.5); // Increase cost by 50%
+            upgradeButton10.textContent = `Upgrade x10 (Cost: ${upgradeCost10x} Coins)`;
+            scoreDisplay.textContent = `Coins: ${coins}`;
+        } else {
+            alert('Not enough coins for Upgrade x10!');
+        }
+    });
+
+    // Upgrade x100
+    upgradeButton100.addEventListener('click', () => {
+        if (coins >= upgradeCost100x) {
+            coins -= upgradeCost100x;
+            coinsPerClick += 100;
+            upgradeCost100x = Math.floor(upgradeCost100x * 1.5); // Increase cost by 50%
+            upgradeButton100.textContent = `Upgrade x100 (Cost: ${upgradeCost100x} Coins)`;
+            scoreDisplay.textContent = `Coins: ${coins}`;
+        } else {
+            alert('Not enough coins for Upgrade x100!');
+        }
+    });
+
+    // Cheat Menu Functionality
     const cheatMenuButton = document.getElementById('cheatMenuButton');
     const cheatMenu = document.getElementById('cheatMenu');
 
-    // Cheat Menu Functionality
     cheatMenuButton.addEventListener('click', () => {
         const password = prompt('Enter the password to unlock the cheat menu:');
         if (password === 'smushed_150305') {
@@ -202,11 +255,6 @@
     document.getElementById('unlockMoonButton').addEventListener('click', () => {
         document.body.style.background = 'black';
         alert("You've unlocked the moon!");
-    });
-
-    clickButton.addEventListener('click', () => {
-        coins += coinsPerClick;
-        scoreDisplay.textContent = `Coins: ${coins}`;
     });
 </script>
 </body>
