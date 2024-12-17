@@ -126,16 +126,6 @@
         p {
             font-size: 18px;
         }
-
-        .cheat-menu {
-            margin-top: 20px;
-            display: none;
-            flex-direction: column;
-        }
-
-        .cheat-menu button {
-            background-color: #FF5722;
-        }
     </style>
 </head>
 <body>
@@ -153,19 +143,11 @@
             <img id="astronautImage" src="astronaut.png" alt="Astronaut" style="display: none;">
             <img id="rocketImage" src="rocket.png" alt="Rocket" style="display: none;">
             <img id="moonImage" src="moon.png" alt="Moon" style="display: none;">
-            <input type="password" id="cheatPassword" placeholder="Enter cheat password">
-            <button id="cheatButton">Enable Cheats</button>
-            <div class="cheat-menu" id="cheatMenu">
-                <button id="addCoins">Add 100,000 Coins</button>
-                <button id="unlockAstronaut">Unlock Astronaut</button>
-                <button id="unlockRocket">Unlock Rocket</button>
-                <button id="goMoon">Go to Moon</button>
-            </div>
         </div>
         <div class="right-section">
-            <button class="upgrade" id="upgradeButton1">Upgrade x1 (Cost: 100 Coins)</button>
-            <button class="upgrade" id="upgradeButton10">Upgrade x10 (Cost: 10,000 Coins)</button>
-            <button class="upgrade" id="upgradeButton100">Upgrade x100 (Cost: 100,000 Coins)</button>
+            <button class="upgrade" id="upgradeButton1">Upgrade x1 (Cost: 10 Coins)</button>
+            <button class="upgrade" id="upgradeButton10">Upgrade x10 (Cost: 100 Coins)</button>
+            <button class="upgrade" id="upgradeButton100">Upgrade x100 (Cost: 1000 Coins)</button>
             <button class="upgrade" id="autoClickerButton">Buy AutoClicker (Cost: 50 Coins)</button>
             <button class="upgrade" id="autoClickerButton2">Upgrade AutoClicker x2 (Cost: 200 Coins)</button>
             <button class="upgrade" id="autoClickerButton5">Upgrade AutoClicker x5 (Cost: 500 Coins)</button>
@@ -174,96 +156,165 @@
         </div>
     </div>
 
-    <script>
-        let coins = 0;
-        let coinsPerClick = 1;
-        let autoClickerCost = 50;
-        let autoClickers = 0;
-        let autoClickerRate = 1; 
-        let astronaut = false;
-        let rocketBuilt = false;
-        let onMoon = false;
-        const scoreDisplay = document.getElementById('score');
-        const clickButton = document.getElementById('clickButton');
-        const upgradeButton1 = document.getElementById('upgradeButton1');
-        const upgradeButton10 = document.getElementById('upgradeButton10');
-        const upgradeButton100 = document.getElementById('upgradeButton100');
-        const cheatButton = document.getElementById('cheatButton');
-        const cheatPassword = document.getElementById('cheatPassword');
-        const cheatMenu = document.getElementById('cheatMenu');
-        const addCoinsButton = document.getElementById('addCoins');
-        const unlockAstronautButton = document.getElementById('unlockAstronaut');
-        const unlockRocketButton = document.getElementById('unlockRocket');
-        const goMoonButton = document.getElementById('goMoon');
+<script>
+    let coins = 0;
+    let coinsPerClick = 1;
+    let autoClickerCost = 50;
+    let autoClickers = 0;
+    let autoClickerRate = 1;
+    let astronaut = false;
+    let rocketBuilt = false;
+    let onMoon = false;
 
-        clickButton.addEventListener('click', () => {
-            if (onMoon) {
-                coins += coinsPerClick * 2;
-            } else {
-                coins += coinsPerClick;
-            }
+    const scoreDisplay = document.getElementById('score');
+    const clickButton = document.getElementById('clickButton');
+    const upgradeButton1 = document.getElementById('upgradeButton1');
+    const upgradeButton10 = document.getElementById('upgradeButton10');
+    const upgradeButton100 = document.getElementById('upgradeButton100');
+    const autoClickerButton = document.getElementById('autoClickerButton');
+    const autoClickerButton2 = document.getElementById('autoClickerButton2');
+    const autoClickerButton5 = document.getElementById('autoClickerButton5');
+    const autoClickerButton10 = document.getElementById('autoClickerButton10');
+    const resetButton = document.getElementById('resetButton');
+    const moonLaunchButton = document.getElementById('goToMoonButton');
+    const astronautImage = document.getElementById('astronautImage');
+    const rocketImage = document.getElementById('rocketImage');
+    const moonImage = document.getElementById('moonImage');
+    const becomeAstronautButton = document.getElementById('becomeAstronautButton');
+    const buildRocketButton = document.getElementById('buildRocketButton');
+
+    // Cheat Menu Section
+    const cheatMenuButton = document.createElement('button');
+    cheatMenuButton.textContent = 'Open Cheat Menu';
+    cheatMenuButton.classList.add('reset');
+    cheatMenuButton.style.marginTop = '30px';
+
+    const cheatMenu = document.createElement('div');
+    cheatMenu.style.display = 'none'; // Hide the cheat menu initially
+    cheatMenu.style.marginTop = '20px';
+    cheatMenu.style.padding = '15px';
+    cheatMenu.style.background = 'rgba(0, 0, 0, 0.7)';
+    cheatMenu.style.color = 'white';
+    cheatMenu.style.border = '1px solid white';
+    cheatMenu.style.borderRadius = '5px';
+
+    cheatMenu.innerHTML = `
+        <h2>Cheat Menu</h2>
+        <button id="addCoinsButton">Add 10,000 Coins</button>
+        <button id="increaseClickPowerButton">Increase Click Power x10</button>
+        <button id="unlockMoonButton">Unlock Moon</button>
+    `;
+
+    document.querySelector('.left-section').appendChild(cheatMenuButton);
+    document.querySelector('.left-section').appendChild(cheatMenu);
+
+    cheatMenuButton.addEventListener('click', () => {
+        const password = prompt('Enter the password to unlock the cheat menu:');
+        if (password === 'smushed_150305') {
+            cheatMenu.style.display = 'block';
+            alert('Cheat menu unlocked!');
+        } else {
+            alert('Incorrect password!');
+        }
+    });
+
+    // Cheat Menu Functionality
+    document.getElementById('addCoinsButton').addEventListener('click', () => {
+        coins += 10000;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    });
+
+    document.getElementById('increaseClickPowerButton').addEventListener('click', () => {
+        coinsPerClick *= 10;
+        alert(`Click power increased! Current Click Power: ${coinsPerClick}`);
+    });
+
+    document.getElementById('unlockMoonButton').addEventListener('click', () => {
+        rocketBuilt = true;
+        onMoon = true;
+        document.body.style.background = 'black';
+        moonImage.style.display = 'block';
+        scoreDisplay.textContent = `Coins: ${coins}`;
+        alert("You've unlocked the moon!");
+    });
+
+    clickButton.addEventListener('click', () => {
+        if (onMoon) {
+            coins += coinsPerClick * 2; // Double coins when on the moon
+        } else {
+            coins += coinsPerClick;
+        }
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    });
+
+    upgradeButton1.addEventListener('click', () => {
+        if (coins >= 100) { // Changed cost to 100 coins
+            coins -= 100;
+            coinsPerClick++;
             scoreDisplay.textContent = `Coins: ${coins}`;
-        });
+        } else {
+            alert('Not enough coins for an upgrade!');
+        }
+    });
 
-        upgradeButton1.addEventListener('click', () => {
-            if (coins >= 100) {
-                coins -= 100;
-                coinsPerClick++;
-                scoreDisplay.textContent = `Coins: ${coins}`;
-            } else {
-                alert('Not enough coins for an upgrade!');
-            }
-        });
-
-        upgradeButton10.addEventListener('click', () => {
-            if (coins >= 10000) {
-                coins -= 10000;
-                coinsPerClick += 10;
-                scoreDisplay.textContent = `Coins: ${coins}`;
-            } else {
-                alert('Not enough coins for an upgrade!');
-            }
-        });
-
-        upgradeButton100.addEventListener('click', () => {
-            if (coins >= 100000) {
-                coins -= 100000;
-                coinsPerClick += 100;
-                scoreDisplay.textContent = `Coins: ${coins}`;
-            } else {
-                alert('Not enough coins for an upgrade!');
-            }
-        });
-
-        cheatButton.addEventListener('click', () => {
-            if (cheatPassword.value === 'smushed_150305') {
-                cheatMenu.style.display = 'flex';
-                alert('Cheats enabled!');
-            } else {
-                alert('Incorrect password!');
-            }
-        });
-
-        addCoinsButton.addEventListener('click', () => {
-            coins += 100000;
+    upgradeButton10.addEventListener('click', () => {
+        if (coins >= 10000) { // Changed cost to 10,000 coins
+            coins -= 10000;
+            coinsPerClick += 10;
             scoreDisplay.textContent = `Coins: ${coins}`;
-        });
+        } else {
+            alert('Not enough coins for an upgrade!');
+        }
+    });
 
-        unlockAstronautButton.addEventListener('click', () => {
-            astronaut = true;
-            alert('Astronaut unlocked!');
-        });
+    upgradeButton100.addEventListener('click', () => {
+        if (coins >= 100000) { // Changed cost to 100,000 coins
+            coins -= 100000;
+            coinsPerClick += 100;
+            scoreDisplay.textContent = `Coins: ${coins}`;
+        } else {
+            alert('Not enough coins for an upgrade!');
+        }
+    });
 
-        unlockRocketButton.addEventListener('click', () => {
-            rocketBuilt = true;
-            alert('Rocket unlocked!');
-        });
+    autoClickerButton.addEventListener('click', () => {
+        if (coins >= autoClickerCost) {
+            coins -= autoClickerCost;
+            autoClickers++;
+            autoClickerCost += 25;
+            autoClickerButton.textContent = `Buy AutoClicker (Cost: ${autoClickerCost} Coins)`;
+            scoreDisplay.textContent = `Coins: ${coins}`;
+        } else {
+            alert('Not enough coins to buy an AutoClicker!');
+        }
+    });
 
-        goMoonButton.addEventListener('click', () => {
-            onMoon = true;
-            document.body.style.backgroundColor = 'black';
-            alert('You are now on the moon!');
-        });
-    </script>
+    setInterval(() => {
+        coins += autoClickers * autoClickerRate;
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    }, 1000);
+
+    resetButton.addEventListener('click', () => {
+        coins = 0;
+        coinsPerClick = 1;
+        autoClickers = 0;
+        autoClickerRate = 1;
+        autoClickerCost = 50;
+        astronaut = false;
+        rocketBuilt = false;
+        onMoon = false;
+        document.body.style.background = 'linear-gradient(to right, #00c6ff, #0072ff)';
+        astronautImage.style.display = 'none';
+        rocketImage.style.display = 'none';
+        moonImage.style.display = 'none';
+        becomeAstronautButton.disabled = false;
+        buildRocketButton.disabled = true;
+        moonLaunchButton.disabled = true;
+        cheatMenu.style.display = 'none';
+        scoreDisplay.textContent = `Coins: ${coins}`;
+    });
+</script>
+
 </body>
 </html>
+
